@@ -45,7 +45,7 @@ public class UssdApplication extends SpringBootServletInitializer {
                 " This is the main menu.<br/>" +
                 " Please select:<br/>" +
                 " <a href=”menu1.html”>Tariff options</a><br/>" +
-                " <a href=”http://otherserver/myApp?option=1”>" +
+                " <a href=”http://200.121.226.12:8080/epayussd?ANI=987”>" +
                 " Contract</a><br/>" +
                 " <a href=“menu2.html?option=2”" +
                 " key=”9”>Administration</a><br/>" +
