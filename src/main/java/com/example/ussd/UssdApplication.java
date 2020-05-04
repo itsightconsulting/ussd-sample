@@ -44,6 +44,8 @@ public class UssdApplication extends SpringBootServletInitializer {
                 " <body>" +
                 " Health Insurance<br/>" +
                 " Please enter your age<br/><br/>" +
+                "<a href=\"http://10.68.143.122:8080/epayussd?IMSI=1\" key=\"1\">Main\n" +
+                "menu</a><br/>" +
                 " <form action=\"http://10.68.143.122:8080/epayussd\"" +
                 "method=\"GET\">" +
                 " <input type=\"text\" name=\"ussdPath\">" +
