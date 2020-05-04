@@ -34,10 +34,10 @@ public class UssdApplication extends SpringBootServletInitializer {
                        @RequestParam(value = "ussdPath", required = false, defaultValue = "") String ussdPath,
                        HttpServletRequest request) {
         System.out.println("***********  S  T  A  R  T  *****************************");
-        Collections.list(request.getParameterNames()).forEach(param->{
-            System.out.println(">> " + param.toUpperCase() +": " +request.getParameter(param));
+        Collections.list(request.getParameterNames()).forEach(param -> {
+            System.out.println(">> " + param.toUpperCase() + ": " + request.getParameter(param));
         });//http://200.121.226.12:8080/epayussd?ANI=987
-        if(ussdPath.isEmpty()){
+        if (ussdPath.isEmpty()) {
 
         }
         return "<html>" +
@@ -46,7 +46,7 @@ public class UssdApplication extends SpringBootServletInitializer {
                 " Please enter your age<br/><br/>" +
                 " <form action=\"http://10.68.143.122:8080/epayussd\"" +
                 "method=\"GET\">" +
-                " <input type=\"number\" name=\"ussdPath\">" +
+                " <input type=\"text\" name=\"ussdPath\">" +
                 " </form>" +
                 " </body>" +
                 "</html>";
