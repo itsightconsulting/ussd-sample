@@ -44,10 +44,10 @@ public class UssdApplication extends SpringBootServletInitializer {
                 " <body>" +
                 " This is the main menu.<br/>" +
                 " Please select:<br/>" +
-                " <a href=\"menu1.html\">Tariff options</a><br/>" +
-                " <a href=\"http://200.121.226.12:8080/epayussd?ANI=987\">Contract</a><br/>" +
-                " <a href=“menu2.html?option=2\"" +
-                " key=\"9\">Administration</a><br/>" +
+                " <a href=\"http://10.68.143.122:8080/epayussd?ANI=123\">Tariff options</a><br/>" +
+                " <a href=\"http://10.68.143.122:8080/epayussd?ANI=456\">Contract</a><br/>" +
+                " <a href=\"http://10.68.143.122:8080/epayussd?ANI=789\"" +
+                " key=\"7\">Administration</a><br/>" +
                 " <a href=\"error.html\" default=\"true\"></a><br/>" +
                 " </body>" +
                 "</html>";
