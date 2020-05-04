@@ -31,26 +31,36 @@ public class UssdApplication extends SpringBootServletInitializer {
                        @RequestParam(value = "IMSI", required = false) String imsi,
                        @RequestParam(value = "DNIS", required = false) String ussd,
                        @RequestParam(value = "dialogID", required = false) String dialogID,
+                       @RequestParam(value = "ussdPath", required = false, defaultValue = "") String ussdPath,
                        HttpServletRequest request) {
-        System.out.println(">> MSISDN: " + msisdn);
-        System.out.println(">> IMSI: " + imsi);
-        System.out.println(">> IMSI: " + dialogID);
-        System.out.println(">> USSD: " + ussd);
-        System.out.println("****************************************");
+        System.out.println("***********  S  T  A  R  T  *****************************");
         Collections.list(request.getParameterNames()).forEach(param->{
             System.out.println(">> " + param.toUpperCase() +": " +request.getParameter(param));
         });//http://200.121.226.12:8080/epayussd?ANI=987
+        if(ussdPath.isEmpty()){
+
+        }
         return "<html>" +
+                " <body>" +
+                " Health Insurance<br/>" +
+                " Please enter your age<br/><br/>" +
+                " <form action=\"http://10.68.143.122:8080/epayussd\"" +
+                "method=\"GET\">" +
+                " <input type=\"number\" name=\"ussdPath\">" +
+                " </form>" +
+                " </body>" +
+                "</html>";
+        /*return "<html>" +
                 " <body>" +
                 " This is the main menu.<br/>" +
                 " Please select:<br/>" +
-                " <a href=\"http://10.68.143.122:8080/epayussd?ANI=123\">Tariff options</a><br/>" +
-                " <a href=\"http://10.68.143.122:8080/epayussd?ANI=456\">Contract</a><br/>" +
-                " <a href=\"http://10.68.143.122:8080/epayussd?ANI=789\"" +
+                " <a href=\"http://10.68.143.122:8080/epayussd?DNIS=123\">Tariff options</a><br/>" +
+                " <a href=\"http://10.68.143.122:8080/epayussd?DNIS=456\">Contract</a><br/>" +
+                " <a href=\"http://10.68.143.122:8080/epayussd?DNIS=789\"" +
                 " key=\"7\">Administration</a><br/>" +
                 " <a href=\"error.html\" default=\"true\"></a><br/>" +
                 " </body>" +
-                "</html>";
+                "</html>";*/
     }
 
 
