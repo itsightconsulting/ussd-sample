@@ -22,6 +22,7 @@ import java.util.Collections;
 public class UssdApplication extends SpringBootServletInitializer {
 
     private static final String RESOURCE_SERVER_HOST = "http://200.107.154.160:8080/epay-rsrc-0.0.1-SNAPSHOT/api/ussd";
+//    private static final String RESOURCE_SERVER_HOST = "http://localhost:8090/api/ussd";
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
@@ -41,6 +42,7 @@ public class UssdApplication extends SpringBootServletInitializer {
                        @RequestParam(value = "username", required = false, defaultValue = "") String username,
                        @RequestParam(value = "ussd", required = false, defaultValue = "") String ussd,
                        @RequestParam(value = "rechargePhone", required = false, defaultValue = "") String rechargePhone,
+                       @RequestParam(value = "rechargeAmount", required = false, defaultValue = "") String rechargeAmount,
                        HttpServletRequest request) {
         System.out.println("***********  S  T  A  R  T  *****************************");
         Collections.list(request.getParameterNames()).forEach(param -> {
@@ -56,7 +58,8 @@ public class UssdApplication extends SpringBootServletInitializer {
         HttpEntity<MultiValueMap<String, String>> httpEntity =
                 new HttpEntity<>(mvm, headers);
         String shortNumber = "*333%23";
-        String finalParam = shortNumber + (ussd.isEmpty() ? username : ussd) + (rechargePhone.isEmpty() ? "" : "%23" +rechargePhone);
+        String finalParam = shortNumber + (ussd.isEmpty() ? username : ussd) + (rechargePhone.isEmpty() ? "" : "%23" + rechargePhone)
+                                        + (rechargeAmount.isEmpty() ? "" : "%23" + rechargeAmount);
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(RESOURCE_SERVER_HOST)
                 .queryParam("ruta", finalParam).build();
         System.out.println(">> GET REST REQUEST: " + builder.toUriString());
