@@ -43,6 +43,7 @@ public class UssdApplication extends SpringBootServletInitializer {
                        @RequestParam(value = "ussd", required = false, defaultValue = "") String ussd,
                        @RequestParam(value = "rechargePhone", required = false, defaultValue = "") String rechargePhone,
                        @RequestParam(value = "rechargeAmount", required = false, defaultValue = "") String rechargeAmount,
+                       @RequestParam(value = "userPin", required = false, defaultValue = "") String userPin,
                        HttpServletRequest request) {
         System.out.println("***********  S  T  A  R  T  *****************************");
         Collections.list(request.getParameterNames()).forEach(param -> {
@@ -59,7 +60,8 @@ public class UssdApplication extends SpringBootServletInitializer {
                 new HttpEntity<>(mvm, headers);
         String shortNumber = "*333%23";
         String finalParam = shortNumber + (ussd.isEmpty() ? username : ussd) + (rechargePhone.isEmpty() ? "" : "%23" + rechargePhone)
-                                        + (rechargeAmount.isEmpty() ? "" : "%23" + rechargeAmount);
+                                        + (rechargeAmount.isEmpty() ? "" : "%23" + rechargeAmount)
+                                        + (userPin.isEmpty() ? "" : "%23" + userPin);
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(RESOURCE_SERVER_HOST)
                 .queryParam("ruta", finalParam).build();
         System.out.println(">> GET REST REQUEST: " + builder.toUriString());
@@ -90,13 +92,5 @@ public class UssdApplication extends SpringBootServletInitializer {
                 " </body>" +
                 "</html>";*/
     }
-
-
-//    ANI=972521234567&vlr=123&hlr=123&DNIS=*123#&ph
-//            ase=2&MPSESSIONID=21323&PP=1
-//    Note that the MSISDN is mapped to the parameter ANI; the service code is
-
-//    Note that the MSISDN is mapped to the parameter ANI; the service code is mapped to
-//    the parameter DNIS; and the USSD session ID is mapped to MPSESSIONID
 
 }
