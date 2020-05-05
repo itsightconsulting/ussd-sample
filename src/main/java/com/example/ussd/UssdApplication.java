@@ -35,10 +35,10 @@ public class UssdApplication extends SpringBootServletInitializer {
 
 
     @GetMapping(value = "/epayussd", produces = {MediaType.TEXT_HTML_VALUE})
-    public String demo(@RequestParam(value = "ANI", required = false) String ani,
-                       @RequestParam(value = "IMSI", required = false) String imsi,
-                       @RequestParam(value = "DNIS", required = false) String dnis,
-                       @RequestParam(value = "MSISDN", required = false) String msisdn,
+    public String demo(@RequestParam(value = "ani", required = false) String ani,
+                       @RequestParam(value = "imsi", required = false) String imsi,
+                       @RequestParam(value = "dnis", required = false) String dnis,
+                       @RequestParam(value = "msisdn", required = false) String msisdn,
                        @RequestParam(value = "dialogID", required = false) String dialogID,
                        @RequestParam(value = "username", required = false, defaultValue = "") String username,
                        @RequestParam(value = "sellerUsername", required = false, defaultValue = "") String sellerUsername,
@@ -54,6 +54,7 @@ public class UssdApplication extends SpringBootServletInitializer {
         if (ussd.isEmpty()) {
 
         }
+
         System.out.println(">>>Prev to msisdn");
         System.out.println(">>>msisdn: " + msisdn);
         System.out.println(">>>After to msisdn");
