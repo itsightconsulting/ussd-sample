@@ -40,6 +40,7 @@ public class UssdApplication extends SpringBootServletInitializer {
                        @RequestParam(value = "DNIS", required = false) String dnis,
                        @RequestParam(value = "dialogID", required = false) String dialogID,
                        @RequestParam(value = "username", required = false, defaultValue = "") String username,
+                       @RequestParam(value = "sellerUsername", required = false, defaultValue = "") String sellerUsername,
                        @RequestParam(value = "ussd", required = false, defaultValue = "") String ussd,
                        @RequestParam(value = "rechargePhone", required = false, defaultValue = "") String rechargePhone,
                        @RequestParam(value = "rechargeAmount", required = false, defaultValue = "") String rechargeAmount,
@@ -61,7 +62,8 @@ public class UssdApplication extends SpringBootServletInitializer {
         String shortNumber = "*333%23";
         String finalParam = shortNumber + (ussd.isEmpty() ? username : ussd) + (rechargePhone.isEmpty() ? "" : "%23" + rechargePhone)
                                         + (rechargeAmount.isEmpty() ? "" : "%23" + rechargeAmount)
-                                        + (userPin.isEmpty() ? "" : "%23" + userPin);
+                                        + (userPin.isEmpty() ? "" : "%23" + userPin)
+                                        + (sellerUsername.isEmpty() ? "" : "%23" + sellerUsername);
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(RESOURCE_SERVER_HOST)
                 .queryParam("ruta", finalParam).build();
         System.out.println(">> GET REST REQUEST: " + builder.toUriString());
