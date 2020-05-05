@@ -35,9 +35,10 @@ public class UssdApplication extends SpringBootServletInitializer {
 
 
     @GetMapping(value = "/epayussd", produces = {MediaType.TEXT_HTML_VALUE})
-    public String demo(@RequestParam(value = "ANI", required = false) String msisdn,
+    public String demo(@RequestParam(value = "ANI", required = false) String ani,
                        @RequestParam(value = "IMSI", required = false) String imsi,
                        @RequestParam(value = "DNIS", required = false) String dnis,
+                       @RequestParam(value = "MSISDN", required = false) String msisdn,
                        @RequestParam(value = "dialogID", required = false) String dialogID,
                        @RequestParam(value = "username", required = false, defaultValue = "") String username,
                        @RequestParam(value = "sellerUsername", required = false, defaultValue = "") String sellerUsername,
@@ -61,11 +62,12 @@ public class UssdApplication extends SpringBootServletInitializer {
                 new HttpEntity<>(mvm, headers);
         String shortNumber = "*333%23";
         String finalParam = shortNumber + (ussd.isEmpty() ? username : ussd) + (rechargePhone.isEmpty() ? "" : "%23" + rechargePhone)
-                                        + (rechargeAmount.isEmpty() ? "" : "%23" + rechargeAmount)
-                                        + (userPin.isEmpty() ? "" : "%23" + userPin)
-                                        + (sellerUsername.isEmpty() ? "" : "%23" + sellerUsername);
+                            + (rechargeAmount.isEmpty() ? "" : "%23" + rechargeAmount)
+                            + (userPin.isEmpty() ? "" : "%23" + userPin)
+                            + (sellerUsername.isEmpty() ? "" : "%23" + sellerUsername);
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(RESOURCE_SERVER_HOST)
-                .queryParam("ruta", finalParam).build();
+                .queryParam("ruta", finalParam)
+                .queryParam("msisdn", msisdn.substring(2)).build();
         System.out.println(">> GET REST REQUEST: " + builder.toUriString());
         System.out.println(">> GET PARAM REQUEST: " + finalParam);
         ResponseEntity<String> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, httpEntity, String.class);
