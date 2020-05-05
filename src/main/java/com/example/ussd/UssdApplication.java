@@ -40,6 +40,7 @@ public class UssdApplication extends SpringBootServletInitializer {
                        @RequestParam(value = "dialogID", required = false) String dialogID,
                        @RequestParam(value = "username", required = false, defaultValue = "") String username,
                        @RequestParam(value = "ussd", required = false, defaultValue = "") String ussd,
+                       @RequestParam(value = "rechargePhone", required = false, defaultValue = "") String rechargePhone,
                        HttpServletRequest request) {
         System.out.println("***********  S  T  A  R  T  *****************************");
         Collections.list(request.getParameterNames()).forEach(param -> {
@@ -55,7 +56,7 @@ public class UssdApplication extends SpringBootServletInitializer {
         HttpEntity<MultiValueMap<String, String>> httpEntity =
                 new HttpEntity<>(mvm, headers);
         String shortNumber = "*333%23";
-        String finalParam = shortNumber + (ussd.isEmpty() ? username : ussd);
+        String finalParam = shortNumber + (ussd.isEmpty() ? username : ussd) + (rechargePhone.isEmpty() ? "" : "%23" +rechargePhone);
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(RESOURCE_SERVER_HOST)
                 .queryParam("ruta", finalParam).build();
         System.out.println(">> GET REST REQUEST: " + builder.toUriString());
