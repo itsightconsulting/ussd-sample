@@ -71,7 +71,7 @@ public class UssdApplication extends SpringBootServletInitializer {
                             + (sellerUsername.isEmpty() ? "" : "%23" + sellerUsername);
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(RESOURCE_SERVER_HOST)
                 .queryParam("ruta", finalParam)
-                .queryParam("msisdn", msisdn.substring(2)).build();
+                .queryParam("msisdn", msisdn.length() == 11 ? msisdn.substring(2) : msisdn).build();
         System.out.println(">> GET REST REQUEST: " + builder.toUriString());
         System.out.println(">> GET PARAM REQUEST: " + finalParam);
         ResponseEntity<String> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, httpEntity, String.class);
