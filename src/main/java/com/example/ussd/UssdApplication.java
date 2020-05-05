@@ -54,6 +54,9 @@ public class UssdApplication extends SpringBootServletInitializer {
         if (ussd.isEmpty()) {
 
         }
+        System.out.println(">>>Prev to msisdn");
+        System.out.println(">>>msisdn: " + msisdn);
+        System.out.println(">>>After to msisdn");
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 
