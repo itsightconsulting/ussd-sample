@@ -21,6 +21,9 @@ import java.util.Collections;
 @RestController("")
 public class UssdApplication extends SpringBootServletInitializer {
 
+    public static final String ARTIFICAL_USSD_CODE = "*333";
+    public static final String ESCAPE_HASHTAG_CHAR = "%23";
+
     private static final String RESOURCE_SERVER_HOST = "http://200.107.154.160:8080/epay-rsrc-0.0.1-SNAPSHOT/api/ussd";
 //    private static final String RESOURCE_SERVER_HOST = "http://localhost:8090/api/ussd";
 
@@ -33,9 +36,8 @@ public class UssdApplication extends SpringBootServletInitializer {
         SpringApplication.run(UssdApplication.class, args);
     }
 
-
     @GetMapping(value = "/epayussd", produces = {MediaType.TEXT_HTML_VALUE})
-    public String demo(@RequestParam(value = "ani", required = false) String ani,
+    public String call(@RequestParam(value = "ani", required = false) String ani,
                        @RequestParam(value = "imsi", required = false) String imsi,
                        @RequestParam(value = "dnis", required = false) String dnis,
                        @RequestParam(value = "msisdn", required = false) String msisdn,
@@ -47,28 +49,24 @@ public class UssdApplication extends SpringBootServletInitializer {
                        @RequestParam(value = "rechargeAmount", required = false, defaultValue = "") String rechargeAmount,
                        @RequestParam(value = "userPin", required = false, defaultValue = "") String userPin,
                        HttpServletRequest request) {
-        System.out.println("***********  S  T  A  R  T  *****************************");
-        Collections.list(request.getParameterNames()).forEach(param -> {
-            System.out.println(">> " + param.toUpperCase() + ": " + request.getParameter(param));
-        });
-        if (ussd.isEmpty()) {
+        System.out.println("+|+|+|+|+|+ +|+|+|+|+|+ INVOKING METHOD CALL(...)");
+        Collections.list(request.getParameterNames()).forEach(param ->
+                System.out.println(">> " + param.toUpperCase() + ": " + request.getParameter(param))
+        );
 
-        }
-
-        System.out.println(">>>Prev to msisdn");
-        System.out.println(">>>msisdn: " + msisdn);
-        System.out.println(">>>After to msisdn");
+        System.out.println(">>> Prev to msisdn");
+        System.out.println(">>> msisdn: " + msisdn);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 
         MultiValueMap<String, String> mvm = new LinkedMultiValueMap<>();
         HttpEntity<MultiValueMap<String, String>> httpEntity =
                 new HttpEntity<>(mvm, headers);
-        String shortNumber = "*333%23";
-        String finalParam = shortNumber + (ussd.isEmpty() ? username : ussd) + (rechargePhone.isEmpty() ? "" : "%23" + rechargePhone)
-                            + (rechargeAmount.isEmpty() ? "" : "%23" + rechargeAmount)
-                            + (userPin.isEmpty() ? "" : "%23" + userPin)
-                            + (sellerUsername.isEmpty() ? "" : "%23" + sellerUsername);
+        String shortNumber = ARTIFICAL_USSD_CODE + ESCAPE_HASHTAG_CHAR;
+        String finalParam = shortNumber + (ussd.isEmpty() ? username : ussd) + (rechargePhone.isEmpty() ? "" : ESCAPE_HASHTAG_CHAR + rechargePhone)
+                + (rechargeAmount.isEmpty() ? "" : ESCAPE_HASHTAG_CHAR + rechargeAmount)
+                + (userPin.isEmpty() ? "" : ESCAPE_HASHTAG_CHAR + userPin)
+                + (sellerUsername.isEmpty() ? "" : ESCAPE_HASHTAG_CHAR + sellerUsername);
         UriComponents builder = UriComponentsBuilder.fromHttpUrl(RESOURCE_SERVER_HOST)
                 .queryParam("ruta", finalParam)
                 .queryParam("msisdn", msisdn.length() == 11 ? msisdn.substring(2) : msisdn).build();
@@ -76,29 +74,6 @@ public class UssdApplication extends SpringBootServletInitializer {
         System.out.println(">> GET PARAM REQUEST: " + finalParam);
         ResponseEntity<String> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, httpEntity, String.class);
         return responseEntity.getBody();
-//        return "<html>" +
-//                " <body>" +
-//                " Health Insurance<br/>" +
-//                " Please enter your age<br/><br/>" +
-//                "<a href=\"http://10.68.143.122:8080/epayussd?IMSI=1\" key=\"1\">Main\n" +
-//                "menu</a><br/>" +
-//                " <form action=\"http://10.68.143.122:8080/epayussd\"" +
-//                "method=\"GET\">" +
-//                " <input type=\"text\" name=\"ussdPath\">" +
-//                " </form>" +
-//                " </body>" +
-//                "</html>";
-        /*return "<html>" +
-                " <body>" +
-                " This is the main menu.<br/>" +
-                " Please select:<br/>" +
-                " <a href=\"http://10.68.143.122:8080/epayussd?DNIS=123\">Tariff options</a><br/>" +
-                " <a href=\"http://10.68.143.122:8080/epayussd?DNIS=456\">Contract</a><br/>" +
-                " <a href=\"http://10.68.143.122:8080/epayussd?DNIS=789\"" +
-                " key=\"7\">Administration</a><br/>" +
-                " <a href=\"error.html\" default=\"true\"></a><br/>" +
-                " </body>" +
-                "</html>";*/
     }
 
 }
